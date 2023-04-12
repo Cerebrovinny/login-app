@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/Cerebrovinny/login-app/config"
@@ -13,7 +12,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func createAdminUser() error {
+func CreateAdminUser() error {
 	db, err := config.GetDatabase()
 	if err != nil {
 		return fmt.Errorf("Error connecting to the database: %w", err)
@@ -59,11 +58,4 @@ func createAdminUser() error {
 	}
 
 	return nil
-}
-
-func main() {
-	err := createAdminUser()
-	if err != nil {
-		log.Fatal(err)
-	}
 }
