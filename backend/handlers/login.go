@@ -8,6 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -16,7 +17,7 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-var jwtKey = []byte("env")
+var jwtKey = []byte(os.Getenv("JWT_KEY"))
 
 func getUser(username string) (models.User, error) {
 	db, err := config.GetDatabase()
