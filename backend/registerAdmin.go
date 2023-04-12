@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/Cerebrovinny/login-app/config"
 	"github.com/Cerebrovinny/login-app/models"
@@ -26,9 +27,9 @@ func createAdminUser() error {
 
 	collection := db.Collection("users")
 
-	//Admin cred
-	adminUsername := "admin"
-	adminPassword := "admin123"
+	// Get admin credentials from environment variables
+	adminUsername := os.Getenv("ADMIN_USERNAME")
+	adminPassword := os.Getenv("ADMIN_PASSWORD")
 
 	// Hash the admin password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(adminPassword), bcrypt.DefaultCost)
