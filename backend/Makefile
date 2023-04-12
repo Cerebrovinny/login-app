@@ -1,8 +1,12 @@
-.PHONY: migrate-server run-server build-docker
+.PHONY: test-register-admin migrate-server run-server build-docker
+
+test-register-admin:
+	@echo "Testing registerAdmin..."
+	go test -v ./migration
 
 migrate-server:
 	@echo "Creating admin user and initializing the database..."
-	ADMIN_USERNAME=admin ADMIN_PASSWORD=admin123 go run registerAdmin.go
+	ADMIN_USERNAME=admin ADMIN_PASSWORD=admin123 go run -mod=mod ./cmd/migrate/main.go
 
 run-server:
 	@echo "Starting the server..."
