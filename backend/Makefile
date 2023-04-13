@@ -1,4 +1,8 @@
-.PHONY: test-register-admin migrate-server run-server build-docker
+.PHONY: test-config test-register-admin migrate-server run-server build-docker run-docker
+
+test-config:
+	@echo "Testing config package..."
+	go test -v ./config
 
 test-register-admin:
 	@echo "Testing registerAdmin..."
