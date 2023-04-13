@@ -66,7 +66,6 @@ make test-register-admin
 ```
 
 ### Assumptions
-Assumptions
 
 When developing the Login App, several assumptions have been made:
 
