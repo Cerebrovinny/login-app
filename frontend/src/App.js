@@ -32,7 +32,7 @@ function App() {
             setPassword={setPassword}
             handleSubmit={handleSubmit}
         />
-        <p>{message}</p>
+        <p className="login-message">{message}</p>
       </div>
   );
 }

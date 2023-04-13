@@ -4,6 +4,7 @@
     background-color: #f8f9fa;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
