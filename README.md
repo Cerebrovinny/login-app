@@ -2,15 +2,15 @@
 
 This is a simple login application with a Golang backend and a React frontend. The backend uses MongoDB for storage and provides a REST API for user authentication.
 
-Prerequisites:
+### Prerequisites:
 
 Before running the application, make sure you have the following installed on your system:
 
-Golang
-Node.js
-npm
-Docker (optional)
-Running the application
+Golang<br>
+Node.js<br>
+npm<br>
+Docker (optional)<br>
+Running the application<br>
 
 ### How-To set up and run the application:
 
