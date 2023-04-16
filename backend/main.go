@@ -10,7 +10,6 @@ import (
 func main() {
 	http.HandleFunc("/login", handlers.LoginHandler)
 
-	// Set up CORS for your server
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowCredentials: true,

@@ -81,7 +81,10 @@ var loginRateLimiter = newRateLimiter(5, 1*time.Minute)
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		json.NewEncoder(w).Encode(map[string]string{"message": "Method not allowed"})
+		err := json.NewEncoder(w).Encode(map[string]string{"message": "Method not allowed"})
+		if err != nil {
+			return
+		}
 		return
 	}
 
@@ -90,27 +93,39 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&creds)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(map[string]string{"message": "Invalid request payload"})
+		err := json.NewEncoder(w).Encode(map[string]string{"message": "Invalid request payload"})
+		if err != nil {
+			return
+		}
 		return
 	}
 
 	if loginRateLimiter.exceeded(creds.Username) {
 		w.WriteHeader(http.StatusTooManyRequests)
-		json.NewEncoder(w).Encode(map[string]string{"message": "Too many login attempts. Please try again later."})
+		err := json.NewEncoder(w).Encode(map[string]string{"message": "Too many login attempts. Please try again later."})
+		if err != nil {
+			return
+		}
 		return
 	}
 
 	user, err := getUser(creds.Username)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		json.NewEncoder(w).Encode(map[string]string{"message": "Invalid username or password"})
+		err := json.NewEncoder(w).Encode(map[string]string{"message": "Invalid username or password"})
+		if err != nil {
+			return
+		}
 		return
 	}
 
 	err = models.CheckPassword(user.Password, creds.Password)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		json.NewEncoder(w).Encode(map[string]string{"message": "Invalid username or password"})
+		err := json.NewEncoder(w).Encode(map[string]string{"message": "Invalid username or password"})
+		if err != nil {
+			return
+		}
 		return
 	}
 
@@ -128,7 +143,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(map[string]string{"message": "Error generating token"})
+		err := json.NewEncoder(w).Encode(map[string]string{"message": "Error generating token"})
+		if err != nil {
+			return
+		}
 		return
 	}
 
@@ -138,5 +156,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		Expires: expirationTime,
 	})
 
-	json.NewEncoder(w).Encode(map[string]string{"message": "Login successful!"})
+	err = json.NewEncoder(w).Encode(map[string]string{"message": "Login successful!"})
+	if err != nil {
+		return
+	}
 }
